@@ -2,10 +2,10 @@
 
 {% block content %}
 {{ super() }}
-<p>Нейронная сеть для классификации телефонов</p> <!-- Добавлен закрывающий тег </p> -->
+<p>Нейронная сеть для классификации рентген снимков легких на наличие covid-19</p> <!-- Добавлен закрывающий тег </p> -->
 <form action="{{ post_url }}" method="POST" enctype="multipart/form-data">
     <p><input type="file" class="form_text" name="image" required></p> <!-- Добавлено required для обязательного поля -->
-    <input type="submit" class="form_btn" value="Узнать тип телефона">
+    <input type="submit" class="form_btn" value="Узнать тип ">
 </form>
 
 {% if predicted_class %} <!-- Переместил условие для отображения результата вне формы -->
