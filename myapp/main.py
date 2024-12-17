@@ -23,7 +23,7 @@ except FileNotFoundError as e:
     cnn_model = None
 
 # Путь к вашей модели YOLOv5
-yolo_model_path = r'C:\Users\bordy\PycharmProjects\yolov5\runs\train\covid_yolov5s_results\weights\best.pt'
+yolo_model_path = os.path.join(os.path.dirname(__file__), 'model', 'best.pt')
 
 # Загрузка модели YOLOv5
 try:
