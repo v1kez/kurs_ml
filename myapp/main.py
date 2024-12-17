@@ -54,7 +54,21 @@ def covid_cnn():
             filename = file.filename
             file_path = os.path.join("temp", filename)
             os.makedirs("temp", exist_ok=True)
-            file.save(file_path)
+
+            print(f"Сохраняем файл в {file_path}...")
+            try:
+                file.save(file_path)
+                print("Файл успешно сохранён.")
+            except Exception as e:
+                print(f"Ошибка при сохранении файла: {e}")
+                return render_template('lab19.html', error="Произошла ошибка при сохранении файла.", menu=menu)
+
+            # Проверка существования файла
+            if os.path.exists(file_path):
+                print(f"Файл успешно сохранен: {file_path}")
+            else:
+                print(f"Ошибка: Файл не найден по пути: {file_path}")
+                return render_template('lab19.html', error="Не удалось сохранить файл.", menu=menu)
 
             img = tf.keras.utils.load_img(file_path, target_size=(img_height, img_width))
             img_array = tf.keras.utils.img_to_array(img)

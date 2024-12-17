@@ -3,7 +3,7 @@ import requests
 
 url = 'http://127.0.0.1:5000/api/covid_cnn'
 # image_path = 'C:/Users/bordy/PycharmProjects/kurs_ml/myapp/uploads/02.jpeg'
-image_path = os.path.join(os.path.dirname(__file__), 'uploads', 'Newitems_node_203_Large.png')
+image_path = os.path.join(os.path.dirname(__file__), 'uploads', 'Newitems_node_203_Large.jpg')
 
 
 # Проверьте, существует ли файл
