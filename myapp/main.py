@@ -141,5 +141,40 @@ def object_detection():
 def send_runs_file(filename):
     return send_from_directory('runs', filename)
 
+
+@app.route('/api/covid_cnn', methods=['POST'])
+def api_covid_cnn():
+    if cnn_model is None:
+        return {'error': 'Модель не загружена. Проверьте путь к файлу.'}, 500
+
+    file = request.files.get('image')
+    img_height = 180
+    img_width = 180
+
+    if file and file.filename:
+        class_names = ['covid', 'нормальный']
+        filename = file.filename
+        file_path = os.path.join("temp", filename)
+        os.makedirs("temp", exist_ok=True)
+        file.save(file_path)
+
+        img = tf.keras.utils.load_img(file_path, target_size=(img_height, img_width))
+        img_array = tf.keras.utils.img_to_array(img)
+        img_array = tf.expand_dims(img_array, 0)
+
+        predictions = cnn_model.predict(img_array)
+        score = tf.nn.softmax(predictions[0])
+        predicted_class = class_names[np.argmax(score)]
+
+        os.remove(file_path)
+
+        return {
+            'predicted_class': predicted_class,
+            'confidence': float(round(np.max(score) * 100, 1))  # Преобразуем в float
+        }, 200
+    else:
+        return {'error': 'Пожалуйста, загрузите изображение.'}, 400
+
+
 if __name__ == "__main__":
     app.run(debug=True)
